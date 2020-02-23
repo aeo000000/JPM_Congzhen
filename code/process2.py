@@ -27,10 +27,23 @@ is_normal_chapter = False
 chapter_count = 1
 split_count = 1
 def processTitle(output_buff_array, str_title):
+    str_part = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十']
+    
     if (str_title.find('第') >= 0):
         global chapter_count
         global is_normal_chapter
         
+        if (((chapter_count - 1) % 10) == 0):
+            part_no = (chapter_count - 1) // 10
+            part_title = '{\\titlename}卷之%s' % (str_part[part_no])
+            part_string = '\\part*{%s}' % part_title
+            output_buff_array.append(part_string)
+            
+            part_string = '\\addcontentsline{toc}{part}{%s}' % part_title
+            output_buff_array.append(part_string)
+            
+            output_buff_array.append('\r\n')
+            
         is_normal_chapter = True
         
         pdf_page_string = ('\\includepdf[pages={%d,%d},fitpaper=false]{tst.pdf}' % ((chapter_count - 1) * 2 + 1, (chapter_count - 1) * 2 + 2))
@@ -43,7 +56,14 @@ def processTitle(output_buff_array, str_title):
     insert_string = ('\\addcontentsline{toc}{chapter}{%s}' % str_title) 
     output_buff_array.append(insert_string)
 
-    insert_string = ('\\markboth{\\titlename}{%s}' % str_title) 
+    if (is_normal_chapter):
+        part_no = ((chapter_count - 1) + 9) // 10
+    
+        str_tt = str_part[(part_no - 1)]
+        insert_string = ('\\markboth{{\\titlename}卷之%s}{%s}' % (str_tt, str_title))
+    else:
+        insert_string = ('\\markboth{\\titlename}{%s}' % (str_title))
+        
     output_buff_array.append(insert_string)
     output_buff_array.append('\r\n')
                 

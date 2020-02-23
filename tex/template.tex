@@ -1,0 +1,248 @@
+\documentclass[a5paper, 12pt, twoside, openany]{ltjtbook} %ltjbook% ltjtbook %declare oneside / or twoside with "openany" will prevent blank pages
+\usepackage{luatexja}
+\usepackage{luatexja-ruby}
+%\usepackage[abspath]{currfile}
+\usepackage{luatexja-fontspec}
+\usepackage[a5paper, scale = 0.75, bottom = 0.8in, top = 1.2in, centering]{geometry}
+\usepackage{moresize}
+\usepackage{tocloft}
+\usepackage[hidelinks, plainpages = false, unicode = true]{hyperref}
+\usepackage{pdfpages}
+\usepackage{bookmark}
+\usepackage{endnotes}
+\usepackage{zhnumber}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{lipsum}
+
+%\setmainfont{Arno Pro}
+%\setsansfont{Myriad Pro}
+
+\setmainjfont[BoldFont = SourceHanSerifSC-Bold.otf]{STZHONGS.otf}
+\setsansjfont[BoldFont = SourceHanSansSC-Bold.otf]{STZHONGS.otf}
+
+%\newjfontfamily{\titlejfont}{A-OTF-OutaiKaiStd-Light.otf}
+\newjfontfamily{\kaishu}{AdobeKaitiStd-Regular.otf}
+\newjfontfamily{\markfont}{STZHONGS.otf}
+
+\setlength\columnsep{3\Cwd}
+\setlength\parindent{2em}
+\setlength{\parskip}{0.5em} 
+
+\def\enoteheading{\subsection*{\notesname}%
+  \mbox{}\par\vskip -2.5\baselineskip\noindent%
+  %\rule{.5\textwidth}{0.4pt}%
+  \rule{3em}{0.5pt}%
+  \par\vskip 0.0\baselineskip}
+\makeatother
+
+%use customized quotation: 
+\let\quotationold\quotation
+\let\endquotationold\endquotation
+\renewenvironment{quotation}{\kaishu\quotationold}{\endquotationold}
+
+\newenvironment{myquoteold}[1][\kaishu]{\par%
+	\vspace{0.5em}#1%
+	\rightskip=1em%
+	\setlength{\parskip}{0em}%
+	\everypar{\noindent\setlength{\hangindent}{4em}\hangafter=0\raggedright}%
+	}
+{\par%
+	%\vspace{0.5em}
+}
+
+\newenvironment{myquote0}{%
+\vspace{0.5em}\setlength{\parskip}{0em}\everypar{\noindent\setlength{\hangindent}{0em}\hangafter=0}\kaishu\raggedright}
+{\par%
+%\vspace{0.5em}
+}
+
+\newenvironment{declareqianyan}{%
+  \vspace{-4em}%
+  \flushright\kaishu%
+}{\vspace{4em}\relax\par}
+
+\definecolor{mydarkgray}{RGB}{96, 96, 96}
+
+%https://tex.stackexchange.com/questions/300340/topsep-itemsep-partopsep-and-parsep-what-does-each-of-them-mean-and-wha
+%https://tex.stackexchange.com/questions/4959/how-do-i-indent-all-lines-of-a-paragraph-so-that-it-looks-like-a-blockquote/4970#4970
+\newenvironment{myquote}[1][\kaishu]{\par%
+	\setlength{\parskip}{0em}%
+	\setlength{\parsep}{0em}%
+	%\setlength{\topsep}{0em}%
+	#1%
+   	\list{}{%
+		\setlength{\topsep}{0.5em}%
+   		\noindent%
+   	 	\setlength{\parskip}{0em}%
+		\setlength{\parsep}{0em}%
+		\setlength\itemsep{0em}%
+   	 	\leftmargin4em%
+   	 	\rightmargin1em%
+	}%
+   	\raggedright\item\relax
+}{\endlist\selectfont\vspace{-0.5em}\par}
+
+\newenvironment{myquote2}[1][\markfont]{\par%
+	\setlength{\parskip}{0em}%
+	\setlength{\parsep}{0em}%
+	%\setlength{\topsep}{0em}%
+	#1%
+   	\list{}{%
+		\setlength{\topsep}{0.5em}%
+   		\noindent%
+   	 	\setlength{\parskip}{0em}%
+		\setlength{\parsep}{0.5em}%
+		\setlength\itemsep{0em}%
+   	 	\leftmargin4em%
+   	 	\rightmargin1em%
+	}%
+   	\raggedright\item\relax
+}{\endlist\selectfont\vspace{-0.5em}\par}
+
+\renewcommand{\contentsname}{目錄}
+\renewcommand{\cftchapfont}{}
+\renewcommand{\cftchappagefont}{}
+\renewcommand{\notesname}{註  釋}
+
+\newcommand{\innerzhushi}{\kaishu}{\small}{\selectfont}
+\newcommand{\marktext}{\markfont}{\small}{\selectfont}
+
+\newcommand{\titlename}{《新刻繡像批評金瓶梅》}
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\makeatletter	%begin definition with @
+
+\def\ps@headings{\let\ps@jpl@in\ps@headnombre
+  \let\@oddfoot\@empty\let\@evenfoot\@empty
+  \def\@evenhead{\small\color{lightgray}\thepage\hfil\leftmark}%
+  \def\@oddhead{\small\color{lightgray}{\rightmark}\hfil\thepage}%
+  \let\@mkboth\markboth
+\def\chaptermark##1{\markboth{%
+   \ifnum \c@secnumdepth >\m@ne
+     \if@mainmatter
+       \@chapapp\thechapter\@chappos\hskip1\zw
+     \fi
+   \fi
+   ##1}{}}%
+\def\sectionmark##1{\markright{%
+   \ifnum \c@secnumdepth >\z@ \thesection.\hskip1\zw\fi
+   ##1}}%
+}
+  
+%copied from file "ltjsbook.cls" which can customize chapter font size:
+\newcommand{\headfont}{\gtfamily\sffamily}	%without this line, "makeschapterhead" can't compile
+
+\def\@makeschapterhead#1{%
+  %\vspace*{2\Cvs}  %original value
+  \vskip 2\Cvs
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \LARGE \headfont #1\par\nobreak  %LARGE: 25pt / huge: 28pt / Huge: 33pt / 
+    \vskip 2\Cvs}
+    \thispagestyle{empty}      %no page number shows on head or foot
+    \setcounter{endnote}{0}    %reset endnote counter
+    \setcounter{footnote}{0}}  %reset footnote counter 
+    
+\let\old@endpart\@endpart
+\renewcommand\@endpart{{\hskip5em\vskip1em}{\insertflower}\old@endpart}
+
+\newcommand{\tableofcontentslocal}{%
+  \if@twocolumn\@restonecoltrue\onecolumn
+  \else\@restonecolfalse\fi
+  \chapter*{\contentsname
+    \@mkboth{\titlename}{\contentsname}%
+  }\@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+}
+
+%https://github.com/rf-latex/endnotes/blob/master/endnotes.sty
+\renewcommand{\theendnote}{（\zhdig{endnote}）}
+
+%\def\@makeenmark{\hbox{\@textsuperscript{\normalfont\@theenmark}}}
+\def\@makeenmark{\hbox{\kaishu\scriptsize\color{gray}{\@theenmark}}}
+
+%this for the endnote mark shows at the end of chapter: 
+%this for the endnote mark shows at the end of chapter: 
+\def\makeenmarktwo{\hbox{\kaishu\small{\@theenmark}\hspace{0.5em}}}
+
+\def\enoteformat{\rightskip\z@ \leftskip\z@ \parindent\z@
+  \leavevmode{\makeenmarktwo}\leftskip 1em\rightskip 1em\setlength{\hangindent}{2.5em}\kaishu\normalsize}
+    	 
+%\renewcommand\cftchapafterpnum{\vskip0pt}
+\renewcommand\cftbeforepartskip{4pt}
+\renewcommand\cftbeforechapskip{1pt}
+
+\makeatother	%end definition with @
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+
+%http://latexcolor.com/
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{cobalt}{rgb}{0.0, 0.28, 0.67}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.55}
+
+\newcommand{\colormeipi}{\color{ballblue}}
+\newcommand{\colorjiapi}{\color{cobalt}}
+\newcommand{\colorpangpi}{\color{darkblue}}
+
+\newcommand{\meipi}{\kaishu\footnotesize\colormeipi}
+\newcommand{\jiapi}{\kaishu\footnotesize\colorjiapi}
+\newcommand{\pangpi}{\kaishu\footnotesize\colorpangpi}
+
+\newcommand{\insertflower}{\vspace{-\baselineskip}%    
+    \begin{figure}[H]%
+    \vspace*{-0.5em}%
+    \hspace*{1cm}%
+    \scalebox{1}[-1]{\includegraphics[keepaspectratio=true,scale=0.7, angle=90]{flower.jpg}}%
+    %\includegraphics[keepaspectratio=true,scale=0.7, angle = -90]{flower.jpg}%
+    \end{figure}%
+}
+  
+\newcommand{\insertauthorlogo}{\vspace{-3.2\baselineskip}%    
+    \begin{figure}[H]%
+    \hspace*{7.2cm}%
+    \includegraphics[keepaspectratio=true,scale=0.05, angle=90]{qrcode.png}%
+    \end{figure}%
+}
+  
+\input{title}
+\date{}
+
+\newcommand\mydot[1]{\scalebox{#1}{.}}
+\renewcommand\cftdot{\mydot{2}}
+\renewcommand\cftdotsep{2}
+%\renewcommand\cftpartnumwidth{6em}
+\renewcommand{\cftchapleader}{\hspace{0.2em}{\cftdotfill{\cftdotsep}}}
+%\renewcommand{\cftpnumalign}{l}
+
+%control the right margin of toc-dots:
+\makeatletter
+\def\@pnumwidth{3.2em}
+\makeatother
+
+\begin{document}
+\maketitle
+
+\pagestyle{headings}
+\pagenumbering{zhdig}
+
+\pdfbookmark{書名頁}{}
+\pdfbookmark{封面}{}
+\includepdf[pages={1},fitpaper=false]{cover.pdf}
+
+\cleardoublepage
+\tableofcontentslocal
+\pdfbookmark{\contentsname}{toc}
+%prevent the 1st page of TOC generate foot page number:
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\mainmatter
+
+\pagenumbering{zhdig}
+\input{contents2}
+
+\pdfbookmark{封底}{}
+\includepdf[pages={2},fitpaper=false]{cover.pdf}
+\end{document}
