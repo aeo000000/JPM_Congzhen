@@ -37,9 +37,9 @@
 \makeatother
 
 %use customized quotation: 
-\let\quotationold\quotation
-\let\endquotationold\endquotation
-\renewenvironment{quotation}{\kaishu\quotationold}{\endquotationold}
+%\let\quotationold\quotation
+%\let\endquotationold\endquotation
+%\renewenvironment{quotation}{\kaishu\quotationold}{\endquotationold}
 
 \newenvironment{myquoteold}[1][\kaishu]{\par%
 	\vspace{0.5em}#1%
@@ -212,7 +212,7 @@
 \input{title}
 \date{}
 
-\newcommand\mydot[1]{\scalebox{#1}{.}}
+\newcommand\mydot[1]{\color{lightgray}\scalebox{#1}{.}}
 \renewcommand\cftdot{\mydot{2}}
 \renewcommand\cftdotsep{2}
 %\renewcommand\cftpartnumwidth{6em}
@@ -244,6 +244,4 @@
 \pagenumbering{zhdig}
 \input{contents2}
 
-\pdfbookmark{封底}{}
-\includepdf[pages={2},fitpaper=false]{cover.pdf}
 \end{document}
