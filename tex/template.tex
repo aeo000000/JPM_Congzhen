@@ -107,6 +107,7 @@
 
 \newcommand{\innerzhushi}{\kaishu}{\small}{\selectfont}
 \newcommand{\marktext}{\markfont}{\small}{\selectfont}
+\newcommand{\rightquadmargin}{\quad\ }
 
 \newcommand{\titlename}{《新刻繡像批評金瓶梅》}
 
@@ -116,8 +117,8 @@
 
 \def\ps@headings{\let\ps@jpl@in\ps@headnombre
   \let\@oddfoot\@empty\let\@evenfoot\@empty
-  \def\@evenhead{\small\color{lightgray}\thepage\hfil\leftmark}%
-  \def\@oddhead{\small\color{lightgray}{\rightmark}\hfil\thepage}%
+  \def\@evenhead{\footnotesize\thepage\hfil\leftmark}%
+  \def\@oddhead{\footnotesize{\rightmark}\hfil\thepage}%
   \let\@mkboth\markboth
 \def\chaptermark##1{\markboth{%
    \ifnum \c@secnumdepth >\m@ne
