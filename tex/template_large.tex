@@ -238,8 +238,8 @@
 \pagestyle{headings}
 \pagenumbering{zhdig}
 
-\pdfbookmark{書名頁}{}
 \pdfbookmark{封面}{}
+\pdfbookmark{書名頁}{}
 \includepdf[pages={1},fitpaper=false]{cover.pdf}
 
 \cleardoublepage
@@ -251,5 +251,8 @@
 
 \pagenumbering{zhdig}
 \input{contents2}
+
+\pdfbookmark[-1]{封底}{}
+\includepdf[pages={3},fitpaper=false]{cover.pdf}
 
 \end{document}
